@@ -6,6 +6,7 @@ async function getEleveOnLine(req) {
     try {
         const token = req.headers['x-access-token'];
 
+        
         if (!token) {
             throw new Error('No token provided.');
         }
