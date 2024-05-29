@@ -2,6 +2,8 @@ const EleveService = require('../services/EleveService');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../config');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 class EleveController {
     constructor() {
@@ -29,6 +31,9 @@ class EleveController {
     createEleve = async (req, res) => {
         try {
             req.body.mdp = bcrypt.hashSync(req.body.mdp, 8);
+            if(req.body._id==null){
+                req.body._id = new ObjectId();
+            }
             const newEleve = await this.EleveService.createEleve(req.body);
 
             // create a token

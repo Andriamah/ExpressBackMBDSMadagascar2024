@@ -11,9 +11,9 @@ async function getEleveOnLine(req) {
         }
 
         const decoded = jwt.verify(token, config.secret);
-        const EleveService = new EleveService();
-        const eleve = await EleveService.getProfById(decoded.id);
-        // console.log('getProfOnLine called with name:', prof.nom);
+        const eleveService = new EleveService();
+        const eleve = await eleveService.getEleveById(decoded.id);
+        console.log('getProfOnLine called with name:', eleve.nom);
 
         if (!eleve) {
             throw new Error('No user found.');

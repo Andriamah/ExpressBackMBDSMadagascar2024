@@ -2,6 +2,11 @@ const ProfService = require('../services/ProfService');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../config');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
+
+
+
 class ProfController {
     constructor() {
         this.ProfService = new ProfService();
@@ -22,6 +27,9 @@ class ProfController {
     createProf = async (req, res) => {
         try {
             req.body.mdp = bcrypt.hashSync(req.body.mdp, 8);
+            if(req.body._id==null){
+                req.body._id = new ObjectId();
+            }
             const newProf = await this.ProfService.createProf(req.body);
 
             // create a token

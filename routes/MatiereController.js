@@ -1,4 +1,6 @@
 const MatiereService = require('../services/MatiereService');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 class MatiereController {
     constructor() {
@@ -17,6 +19,9 @@ class MatiereController {
 
     createMatiere = async (req, res) => {
         try {
+            if(req.body._id==null){
+                req.body._id = new ObjectId();
+            }
             const newMatiere = await this.MatiereService.createMatiere(req.body);
             res.status(201).send(newMatiere); 
         } catch (err) {

@@ -13,7 +13,7 @@ async function getProfOnLine(req) {
         const decoded = jwt.verify(token, config.secret);
         const profService = new ProfService();
         const prof = await profService.getProfById(decoded.id);
-        // console.log('getProfOnLine called with name:', prof.nom);
+        console.log('getProfOnLine called with name:', prof.nom);
 
         if (!prof) {
             throw new Error('No user found.');

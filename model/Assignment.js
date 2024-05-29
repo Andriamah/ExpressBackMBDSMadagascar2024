@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let AssignmentSchema = Schema({
-    // _id: Number,
+    // _id: { type: mongoose.Schema.Types.ObjectId, default: mongoose.Types.ObjectId },
     titre: String,
     id_matiere : String,
     id_promotion : String,

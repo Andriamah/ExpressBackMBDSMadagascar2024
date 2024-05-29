@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
 const assignmentController = new AssignmentController();
 app.get('/assignments', assignmentController.getAssignments);
 app.get('/assignment/prof', assignmentController.getAssignmentByMatiereToken);
+app.get('/assignment/eleve', assignmentController.getAssignmentByPromotionToken);
 app.get('/assignment/id/:id', assignmentController.getAssignmentById);
 app.get('/assignment/:id_matiere', assignmentController.getAssignmentByMatiere);
 

@@ -13,10 +13,12 @@ class ProfService {
 
     async getProfById(id) {
         try {
-            const prof = await Prof.findOne({ _id: id });
+            console.log('_id du prof ',id)
+            
+            const prof = await Prof.find({ _id: id });
             console.log("prof by ID: ");
             console.log(prof);
-            return prof;
+            return prof[0];
         } catch (err) {
             console.log(err)
             throw err;

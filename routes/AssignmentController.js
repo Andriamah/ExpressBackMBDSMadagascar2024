@@ -2,7 +2,11 @@ const AssignmentService = require('../services/AssignmentService');
 const EleveService = require('../services/EleveService');
 const ContenuService = require('../services/ContenuService');
 const { getProfOnLine } = require('../utile/getProfOnline');
-const { sendMail } = require('../utile/sendMail')
+const { sendMail } = require('../utile/sendMail');
+const { getEleveOnLine } = require('../utile/getEleveOnLine');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
+
 
 
 class AssignmentController {
@@ -43,7 +47,6 @@ class AssignmentController {
     };
 
     getAssignmentByMatiereToken = async (req, res) => {
-        console.log('MIDITRA CONTROLLER');
         try {
             console.log('MIDITRA CONTROLLER TRY');
 
@@ -56,9 +59,28 @@ class AssignmentController {
         }
     };
 
+
+
     getAssignmentByPromotion = async (req, res) => {
+
         try {
+
             const assignments = await this.AssignmentService.getAssignmentByPromotion(req.params.id_promotion);
+            res.send(assignments);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    };
+
+    getAssignmentByPromotionToken = async (req, res) => {
+        console.log('MIDITRA CONTROLLER prom');
+
+        try {
+
+            const eleve = await getEleveOnLine(req);
+            console.log('MIDITRA CONTROLLER prom try :',eleve);
+
+            const assignments = await this.AssignmentService.getAssignmentByPromotion(eleve.id_promotion);
             res.send(assignments);
         } catch (error) {
             res.status(500).send(error);
@@ -101,9 +123,15 @@ class AssignmentController {
                 console.log('send mail controller')
                 const mail = await this.EleveService.getEmailEleveByPromotion(req.body.id_promotion);
                 // Obtenir l'adresse e-mail du professeur en ligne
-                await sendMail(profMail, mail,req.body.id_matiere);
+                await sendMail(profMail, mail, req.body.id_matiere);
             }
-            // req.body.id = profMail.id_matiere;
+
+            if(req.body._id==null){
+                req.body._id = new ObjectId();
+            }
+            req.body.id = profMail.id_matiere;
+            const dataa = req.body;
+            console.log('data namboarina b ',dataa)
             const newAssignment = await this.AssignmentService.createAssignment(req.body);
 
             res.status(201).send(newAssignment); // Répondre avec la nouvelle assignment créée

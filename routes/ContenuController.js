@@ -1,6 +1,10 @@
 const ContenuService = require('../services/ContenuService');
 const upload = require('../utile/multer');
-const {getEleveOnline} = require('../utile/getEleveOnline');
+const { getEleveOnLine } = require('../utile/getEleveOnLine');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
+
+
 class ContenuController {
     constructor() {
         this.ContenuService = new ContenuService();
@@ -64,25 +68,25 @@ class ContenuController {
         try {
             const id = req.params.id;
             let updateData = {};
-    
+
             // Check and add 'note' if present in the request body
             if (req.body.note !== undefined) {
                 const note = Number(req.body.note);
-                console.log('note ',note)
+                console.log('note ', note)
                 if (isNaN(note)) {
                     throw new Error('La note doit être un nombre.');
                 }
                 updateData.note = note;
             }
-    
+
             // Check and add 'commentaire' if present in the request body
             if (req.body.commentaire !== undefined) {
 
                 updateData.commentaire = req.body.commentaire;
             }
-    
+
             console.log(updateData);
-            
+
             // Update the content in the database
             const updatedContenu = await this.ContenuService.updateContenuNote(id, updateData);
             res.send(updatedContenu);
@@ -91,8 +95,8 @@ class ContenuController {
             res.status(500).send(error.message || error);
         }
     };
-    
-    
+
+
 
     deleteContenu = async (req, res) => {
         try {
@@ -139,13 +143,16 @@ class ContenuController {
     //         res.status(500).send(err);
     //     }
     // };
-    
+
     createContenu = async (req, res) => {
         try {
-            const eleveEnLigne = await getEleveOnline(req);
+            const eleveEnLigne = await getEleveOnLine(req);
             req.body.id_eleve = eleveEnLigne._id;
             req.body.note = 0;
             req.body.siNote = false;
+            if (req.body._id == null) {
+                req.body._id = new ObjectId();
+            }
             const newContenu = await this.ContenuService.createContenu(req.body);
             res.status(201).send(newContenu);
 
