@@ -1,4 +1,4 @@
-const Matiere = require('../model/matiere');
+const Matiere = require('../model/Matiere');
 
 class MatiereService {
     async getMatieres() {
