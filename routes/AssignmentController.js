@@ -94,14 +94,14 @@ class AssignmentController {
             // Créer la nouvelle assignment
             // Envoyer un e-mail au professeur avec les détails de l'assignment
             // milA decommentene
-            // const profMail = await getProfOnLine(req);
+            const profMail = await getProfOnLine(req);
 
             if (req.body.email_reminder) {
                 // Obtenir les adresses e-mail des élèves par promotion
                 console.log('send mail controller')
                 const mail = await this.EleveService.getEmailEleveByPromotion(req.body.id_promotion);
                 // Obtenir l'adresse e-mail du professeur en ligne
-                await sendMail(profMail, mail);
+                await sendMail(profMail, mail,req.body.id_matiere);
             }
             // req.body.id = profMail.id_matiere;
             const newAssignment = await this.AssignmentService.createAssignment(req.body);

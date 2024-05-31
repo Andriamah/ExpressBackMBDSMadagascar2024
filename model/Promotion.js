@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let PromotionSchema = Schema({
-    // _id: Number,
+    _id: String,
     intitule : String
 });
 

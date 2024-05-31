@@ -2,7 +2,7 @@ const express = require('express')
 
 const nodemailer = require("nodemailer")
 
-async function sendMail(mailSender, listmail) {
+async function sendMail(mailSender, listmail , assignment) {
     console.log('Hello elo')
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -15,12 +15,12 @@ async function sendMail(mailSender, listmail) {
     const msg = {
         from: mailSender.prenom + " "+ mailSender.nom, // Adresse de l'expéditeur
         to: listmail.join(','), // Liste des destinataires
-        subject: "Nouvelle assignment disponible sur la plateforme étudiante", // Ligne d'objet
+        subject: "Nouvelle assignment du "+assignment+" disponible sur la plateforme étudiante", // Ligne d'objet
         html: `
             <p>Bonjour à tous,</p>
             <p>Je vous informe qu'une nouvelle assignment a été mise en ligne sur la plateforme étudiante/prof. Merci de bien vouloir vérifier la plateforme dès que possible pour prendre connaissance des détails et des instructions.</p>
             <p>
-                <a href="http://localhost:4200" style="
+                <a href="https://frontendmbdsassignementapplication.onrender.com/login" style="
                     display: inline-block;
                     padding: 10px 20px;
                     font-size: 16px;

@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let MatiereSchema = Schema({
-    // _id: Number,
+    _id: String,
     intitule : String,
     image : String 
 });

@@ -1,5 +1,6 @@
 const ContenuService = require('../services/ContenuService');
 const upload = require('../utile/multer');
+const {getEleveOnline} = require('../utile/getEleveOnline');
 class ContenuController {
     constructor() {
         this.ContenuService = new ContenuService();
@@ -138,8 +139,11 @@ class ContenuController {
     //         res.status(500).send(err);
     //     }
     // };
+    
     createContenu = async (req, res) => {
         try {
+            const eleveEnLigne = await getEleveOnline(req);
+            req.body.id_eleve = eleveEnLigne._id;
             req.body.note = 0;
             req.body.siNote = false;
             const newContenu = await this.ContenuService.createContenu(req.body);

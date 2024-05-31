@@ -2,7 +2,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let EleveSchema = Schema({
-    // _id: Number,
+    _id: String,
     nom : String,
     prenom : String,
     mail : String ,

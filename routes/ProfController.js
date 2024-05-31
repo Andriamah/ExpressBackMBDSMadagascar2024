@@ -71,7 +71,7 @@ class ProfController {
                 expiresIn: 86400 // expires in 24 hours
             });
 
-            res.status(200).send({ auth: true, token: token });
+            res.status(200).send({ auth: true, token: token , id_matiere : user.id_matiere });
         } catch (err) {
             console.error(err);
             res.status(500).send('Error on the server.');
